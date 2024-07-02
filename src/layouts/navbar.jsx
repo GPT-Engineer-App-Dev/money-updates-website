@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, Package2 } from "lucide-react";
+import { Search, User, Menu, Newspaper } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { navItems } from "../App";
 
@@ -19,11 +19,15 @@ const Layout = () => {
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 justify-between">
         <DesktopNav />
         <MobileNav />
-        <UserMenu />
+        <div className="flex items-center gap-4">
+          <SearchBar />
+          <UserMenu />
+        </div>
       </header>
       <main className="flex-grow p-4 overflow-auto">
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 };
@@ -34,8 +38,8 @@ const DesktopNav = () => (
       to="/"
       className="flex items-center gap-2 text-lg font-semibold md:text-base"
     >
-      <Package2 className="h-6 w-6" />
-      <span className="sr-only">Acme Inc</span>
+      <Newspaper className="h-6 w-6" />
+      <span>Financial Times</span>
     </NavItem>
     {navItems.map((item) => (
       <NavItem key={item.to} to={item.to}>
@@ -59,8 +63,8 @@ const MobileNav = () => (
           to="/"
           className="flex items-center gap-2 text-lg font-semibold"
         >
-          <Package2 className="h-6 w-6" />
-          <span className="sr-only">Acme Inc</span>
+          <Newspaper className="h-6 w-6" />
+          <span>Financial Times</span>
         </NavItem>
         {navItems.map((item) => (
           <NavItem key={item.to} to={item.to}>
@@ -76,7 +80,7 @@ const UserMenu = () => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="secondary" size="icon" className="rounded-full">
-        <CircleUser className="h-5 w-5" />
+        <User className="h-5 w-5" />
         <span className="sr-only">Toggle user menu</span>
       </Button>
     </DropdownMenuTrigger>
@@ -89,6 +93,20 @@ const UserMenu = () => (
       <DropdownMenuItem>Logout</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
+);
+
+const SearchBar = () => (
+  <div className="relative">
+    <input
+      type="text"
+      placeholder="Search..."
+      className="border rounded-full px-4 py-2"
+    />
+    <Button variant="outline" size="icon" className="absolute right-2 top-1/2 transform -translate-y-1/2">
+      <Search className="h-5 w-5" />
+      <span className="sr-only">Search</span>
+    </Button>
+  </div>
 );
 
 const NavItem = ({ to, children, className }) => (
@@ -106,6 +124,35 @@ const NavItem = ({ to, children, className }) => (
   >
     {children}
   </NavLink>
+);
+
+const Footer = () => (
+  <footer className="border-t bg-background p-4 text-center">
+    <div className="flex justify-center space-x-4">
+      <FooterLink to="/about">About Us</FooterLink>
+      <FooterLink to="/contact">Contact</FooterLink>
+      <FooterLink to="/privacy">Privacy Policy</FooterLink>
+      <FooterLink to="/terms">Terms of Service</FooterLink>
+    </div>
+    <div className="mt-4">
+      <SocialMediaIcons />
+    </div>
+  </footer>
+);
+
+const FooterLink = ({ to, children }) => (
+  <NavLink
+    to={to}
+    className="text-muted-foreground hover:text-foreground transition-colors"
+  >
+    {children}
+  </NavLink>
+);
+
+const SocialMediaIcons = () => (
+  <div className="flex justify-center space-x-4">
+    {/* Add social media icons here */}
+  </div>
 );
 
 export default Layout;
